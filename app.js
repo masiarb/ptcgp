@@ -65,7 +65,14 @@ console.log('Run this app using "npm start" to include sass/scss/css builds.\n')
 /**
  * Connect to MongoDB.
  */
-mongoose.connect(process.env.MONGODB_URI);
+const mongoURI = 'mongodb://' + process.env.MONGO_INITDB_ROOT_USERNAME + ':' 
+  + process.env.MONGO_INITDB_ROOT_PASSWORD + '@' 
+  + process.env.DB_HOST + ':' 
+  + process.env.DB_PORT + '/' 
+  //+ process.env.DB_NAME );
+  + process.env.DB_NAME + '?retryWrites=true&writeConcern=majority&authSource=admin';
+  console.log("================ " + mongoURI);
+mongoose.connect(mongoURI);
 mongoose.connection.on('error', (err) => {
   console.error(err);
   console.log('%s MongoDB connection error. Please make sure MongoDB is running.');
@@ -94,7 +101,7 @@ app.use(session({
     maxAge: 1209600000, // Two weeks in milliseconds
     secure: secureTransfer
   },
-  store: MongoStore.create({ mongoUrl: process.env.MONGODB_URI })
+  store: MongoStore.create({ mongoUrl: mongoURI })
 }));
 app.use(passport.initialize());
 app.use(passport.session());

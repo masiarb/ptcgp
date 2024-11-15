@@ -2,13 +2,17 @@ version: '3.8'
 services:
   mongo:
     image: mongo
-  web:
-    build: .
-    ports:
-     - "8080:8080"
     environment:
-     - MONGODB_URI=mongodb://mongo:27017/test
-    links:
-     - mongo
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: ptcgproot
+    ports:
+      - "2517:2716"
+  web:
+    build: 
+      context: .
+    ports:
+      - "8080:8080"
+    environment:
+      NODE_ENV: production
     depends_on:
-     - mongo
+      - mongo
