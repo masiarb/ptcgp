@@ -6,7 +6,7 @@ services:
       MONGO_INITDB_ROOT_USERNAME: root
       MONGO_INITDB_ROOT_PASSWORD: ptcgproot
     ports:
-      - "2517:2716"
+      - "2517:27017"
   web:
     build: 
       context: .
